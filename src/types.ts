@@ -104,7 +104,7 @@ export interface NotificationPreferences {
 
 export type VoucherType = 'PERCENTAGE' | 'FIXED_AMOUNT' | 'SERVICE_GIFT';
 
-export type CustomerSegment = 'ENTERPRISE' | 'SME' | 'RETAINER_VIP' | 'INDIVIDUAL';
+export type CustomerSegment = 'ENTERPRISE' | 'RETAILER' | 'RETAINER_VIP' | 'SME' | 'INDIVIDUAL';
 
 export interface Voucher {
   id: string;
@@ -184,6 +184,7 @@ export interface ConsultationLead {
   assignedLawyerName?: string;
   assignedLawyerId?: string;
   priority: 'HIGH' | 'NORMAL' | 'URGENT';
+  customerSegment?: CustomerSegment;
 }
 
 export interface AdminStats {

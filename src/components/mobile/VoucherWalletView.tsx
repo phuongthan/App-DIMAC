@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { UserVoucherStatus, UserVoucherItem, CustomerSegment } from '../../types';
+import { UserVoucherStatus, UserVoucherItem } from '../../types';
 import { TRANSLATIONS } from '../../utils/translations';
 import { 
   Tag, 
@@ -14,10 +14,7 @@ import {
   Building2,
   Building,
   UserCheck,
-  Layers,
-  Lock,
-  ArrowRight,
-  Info
+  Layers
 } from 'lucide-react';
 
 export const VoucherWalletView: React.FC = () => {
@@ -25,11 +22,7 @@ export const VoucherWalletView: React.FC = () => {
     filteredUserVouchers, 
     setSelectedVoucherForQr, 
     redeemVoucherCode,
-    language,
-    isAuthenticated,
-    currentUserSegment,
-    switchDemoSegment,
-    setIsAuthModalOpen
+    language
   } = useApp();
 
   const t = TRANSLATIONS[language] || TRANSLATIONS.vi;
@@ -71,59 +64,6 @@ export const VoucherWalletView: React.FC = () => {
   const availableVouchers = filteredUserVouchers.filter(v => v.status === 'AVAILABLE');
   const usedVouchers = filteredUserVouchers.filter(v => v.status === 'USED');
   const expiredVouchers = filteredUserVouchers.filter(v => v.status === 'EXPIRED');
-
-  const getSegmentMeta = (segment: CustomerSegment | null) => {
-    switch (segment) {
-      case 'ENTERPRISE':
-        return {
-          title: 'Khách hàng Doanh nghiệp / Tập đoàn',
-          shortName: 'ENTERPRISE',
-          badgeText: 'Đặc quyền Doanh nghiệp',
-          badgeStyle: 'bg-[#0A2E1A] text-emerald-300 border-[#1B5E34]',
-          icon: Building2,
-          color: '#1B5E34'
-        };
-      case 'SME':
-        return {
-          title: 'Doanh nghiệp vừa và nhỏ',
-          shortName: 'SME',
-          badgeText: 'Ưu đãi Doanh nghiệp SME',
-          badgeStyle: 'bg-[#1A365D] text-blue-200 border-[#2B6CB0]',
-          icon: Building,
-          color: '#2B6CB0'
-        };
-      case 'RETAINER_VIP':
-        return {
-          title: 'Hợp đồng Tư vấn Thường xuyên VIP',
-          shortName: 'RETAINER VIP',
-          badgeText: 'Đặc quyền Retainer VIP',
-          badgeStyle: 'bg-[#3B0764] text-purple-200 border-[#7E22CE]',
-          icon: ShieldCheck,
-          color: '#7E22CE'
-        };
-      case 'INDIVIDUAL':
-        return {
-          title: 'Khách hàng Cá nhân / Nhà đầu tư HNWI',
-          shortName: 'CÁ NHÂN',
-          badgeText: 'Khách hàng Cá nhân',
-          badgeStyle: 'bg-[#451A03] text-amber-200 border-[#B45309]',
-          icon: UserCheck,
-          color: '#B45309'
-        };
-      default:
-        return {
-          title: 'Khách vãng lai (Chưa đăng nhập)',
-          shortName: 'GUEST',
-          badgeText: 'Chưa xác thực phân khúc',
-          badgeStyle: 'bg-slate-800 text-slate-300 border-slate-600',
-          icon: Lock,
-          color: '#475569'
-        };
-    }
-  };
-
-  const currentMeta = getSegmentMeta(currentUserSegment);
-  const SegmentIcon = currentMeta.icon;
 
   const renderVoucherBadge = (item: UserVoucherItem) => {
     const { voucher } = item;
@@ -231,54 +171,6 @@ export const VoucherWalletView: React.FC = () => {
             </span>
           </div>
         </div>
-
-        {/* Customer Segment Active Indicator Bar */}
-        <div className="mt-3 p-2.5 rounded border border-[#DCE5DF] bg-[#F8FAF9] flex items-center justify-between gap-2 shadow-2xs">
-          <div className="flex items-center gap-2 min-w-0">
-            <div className="w-7 h-7 rounded bg-[#112216] text-white flex items-center justify-center shrink-0">
-              <SegmentIcon className="w-4 h-4 text-emerald-400" />
-            </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-[10px] text-[#526357] font-semibold uppercase">Ví Voucher theo Phân khúc:</span>
-                <span className={`px-1.5 py-0.2 text-[9px] font-extrabold uppercase rounded border ${currentMeta.badgeStyle}`}>
-                  {currentMeta.shortName}
-                </span>
-              </div>
-              <p className="text-xs font-bold text-[#112216] truncate">
-                {currentMeta.title}
-              </p>
-            </div>
-          </div>
-
-          {!isAuthenticated ? (
-            <button
-              onClick={() => setIsAuthModalOpen(true)}
-              className="px-2.5 py-1 bg-[#1B5E34] hover:bg-[#144928] text-white text-[10px] font-bold uppercase tracking-wider rounded transition shrink-0 shadow-2xs flex items-center gap-1"
-            >
-              <span>Đăng nhập</span>
-              <ArrowRight className="w-3 h-3" />
-            </button>
-          ) : (
-            <button
-              onClick={() => setIsAuthModalOpen(true)}
-              className="px-2 py-1 bg-white hover:bg-[#EAF4ED] border border-[#CBD5E1] text-[#1B5E34] text-[10px] font-bold uppercase tracking-wider rounded transition shrink-0"
-              title="Đổi phân khúc khách hàng để test"
-            >
-              Đổi vai
-            </button>
-          )}
-        </div>
-
-        {/* Guest Warning if not authenticated */}
-        {!isAuthenticated && (
-          <div className="mt-2 p-2 bg-amber-50 border border-amber-200 text-amber-900 rounded text-xs flex items-center gap-2">
-            <Info className="w-4 h-4 text-amber-600 shrink-0" />
-            <span>
-              Chưa đăng nhập. Bạn đang xem các ưu đãi phổ thông. Hãy đăng nhập để mở khóa các đặc quyền M&A, VIP Retainer, và gói Doanh nghiệp.
-            </span>
-          </div>
-        )}
 
         {/* Redeem code input box with Segment protection */}
         <form onSubmit={handleRedeem} className="mt-3">

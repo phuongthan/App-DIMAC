@@ -97,7 +97,8 @@ interface AppContextType {
   // Leads & Consultations
   leads: ConsultationLead[];
   createLead: (leadData: Omit<ConsultationLead, 'id' | 'createdAt' | 'status'>) => void;
-  updateLeadStatus: (id: string, status: ConsultationLead['status'], assignedLawyer?: string) => void;
+  updateLeadStatus: (id: string, status: ConsultationLead['status'], assignedLawyer?: string, notes?: string, segment?: CustomerSegment) => void;
+  updateLead: (id: string, updates: Partial<ConsultationLead>) => void;
   
   // Admin & Stats
   adminStats: AdminStats;
@@ -142,9 +143,9 @@ interface AppContextType {
 }
 
 export const DEFAULT_LOGO_CONFIG: LogoConfig = {
-  customImageUrl: null,
+  customImageUrl: '/assets/dimac-logo-official.svg',
   brandName: 'DIMAC',
-  tagline: 'Our Strategic Legal Partnership\nPowers Your Business Vision',
+  tagline: 'ASIA PREMIER LAWYERS',
   showTagline: true,
   colorTheme: 'official',
 };
@@ -165,10 +166,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (local) {
       try {
         const parsed = JSON.parse(local);
-        if (parsed.tagline === 'ASIA PREMIER LAWYERS' || !parsed.tagline) {
-          parsed.tagline = 'Our Strategic Legal Partnership\nPowers Your Business Vision';
+        if (!parsed.customImageUrl) {
+          parsed.customImageUrl = '/assets/dimac-logo-official.svg';
         }
-        return parsed;
+        if (!parsed.tagline) {
+          parsed.tagline = 'ASIA PREMIER LAWYERS';
+        }
+        return { ...DEFAULT_LOGO_CONFIG, ...parsed };
       } catch (e) {
         return DEFAULT_LOGO_CONFIG;
       }
@@ -328,7 +332,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   
   const [leads, setLeads] = useState<ConsultationLead[]>(() => {
     const local = localStorage.getItem('dimac_leads');
-    return local ? JSON.parse(local) : INITIAL_LEADS;
+    if (local) {
+      try {
+        const parsed: ConsultationLead[] = JSON.parse(local);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map(lead => {
+            if (!lead.customerSegment) {
+              const init = INITIAL_LEADS.find(il => il.id === lead.id);
+              return { ...lead, customerSegment: init?.customerSegment || 'ENTERPRISE' };
+            }
+            return lead;
+          });
+        }
+      } catch (e) {}
+    }
+    return INITIAL_LEADS;
   });
   
   const [adminStats, setAdminStats] = useState<AdminStats>(INITIAL_ADMIN_STATS);
@@ -696,6 +714,29 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setVouchers(prev => [newV, ...prev]);
     setAdminStats(prev => ({ ...prev, totalVouchersIssued: prev.totalVouchersIssued + newV.totalIssued }));
+
+    // Auto-provision to current user's wallet if segment matches
+    if (currentUserSegment) {
+      const isApplicable = !newV.targetSegments || 
+        newV.targetSegments.includes('ALL') || 
+        newV.targetSegments.includes(currentUserSegment);
+
+      if (isApplicable) {
+        setUserVouchers(prev => {
+          if (!prev.some(uv => uv.voucherId === newV.id)) {
+            const newUserVoucher: UserVoucherItem = {
+              id: `uv-${newV.id}-${Date.now()}`,
+              voucherId: newV.id,
+              voucher: newV,
+              status: 'AVAILABLE',
+              claimedAt: new Date().toISOString().split('T')[0]
+            };
+            return [newUserVoucher, ...prev];
+          }
+          return prev;
+        });
+      }
+    }
   };
 
   // User Profile
@@ -715,17 +756,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setAdminStats(prev => ({ ...prev, activeLeadsCount: prev.activeLeadsCount + 1 }));
   };
 
-  const updateLeadStatus = (id: string, status: ConsultationLead['status'], assignedLawyer?: string) => {
+  const updateLeadStatus = (id: string, status: ConsultationLead['status'], assignedLawyer?: string, notes?: string, segment?: CustomerSegment) => {
     setLeads(prev => prev.map(l => {
       if (l.id === id) {
         return {
           ...l,
           status,
-          ...(assignedLawyer ? { assignedLawyerName: assignedLawyer } : {})
+          ...(assignedLawyer !== undefined ? { assignedLawyerName: assignedLawyer } : {}),
+          ...(notes !== undefined ? { notes } : {}),
+          ...(segment !== undefined ? { customerSegment: segment } : {})
         };
       }
       return l;
     }));
+  };
+
+  const updateLead = (id: string, updates: Partial<ConsultationLead>) => {
+    setLeads(prev => prev.map(l => l.id === id ? { ...l, ...updates } : l));
   };
 
   // Deep Link Handler
@@ -809,6 +856,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         leads,
         createLead,
         updateLeadStatus,
+        updateLead,
         
         adminStats,
         handleDeepLink,

@@ -14,7 +14,6 @@ import {
   UserCheck, 
   ArrowRight, 
   CheckCircle2, 
-  Smartphone,
   Eye,
   EyeOff
 } from 'lucide-react';
@@ -32,7 +31,7 @@ export const AuthModal: React.FC = () => {
   const [authMode, setAuthMode] = useState<'password' | 'otp'>('password');
   const [email, setEmail] = useState('tuan.tran@vanguard-corp.vn');
   const [password, setPassword] = useState('DimacLegal@2025');
-  const [phoneOrEmailOtp, setPhoneOrEmailOtp] = useState('0909 123 456');
+  const [emailOtp, setEmailOtp] = useState('tuan.tran@vanguard-corp.vn');
   const [otpCode, setOtpCode] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [otpCountdown, setOtpCountdown] = useState(0);
@@ -74,10 +73,11 @@ export const AuthModal: React.FC = () => {
   };
 
   const handleSendOtp = () => {
-    if (!phoneOrEmailOtp.trim()) {
-      setLoginError('Vui lòng nhập Số điện thoại hoặc Email để nhận OTP.');
+    if (!emailOtp.trim() || !emailOtp.includes('@')) {
+      setLoginError('Vui lòng nhập địa chỉ Email hợp lệ để nhận mã xác thực OTP.');
       return;
     }
+    setLoginError('');
     setIsOtpSent(true);
     setOtpCountdown(45);
     setOtpCode('682914'); // Auto fill convenient mock OTP
@@ -92,7 +92,12 @@ export const AuthModal: React.FC = () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      switchDemoSegment('RETAINER_VIP');
+      let seg: CustomerSegment = 'ENTERPRISE';
+      if (emailOtp.includes('ecotrans') || emailOtp.includes('sme')) seg = 'SME';
+      else if (emailOtp.includes('k-holding') || emailOtp.includes('vip')) seg = 'RETAINER_VIP';
+      else if (emailOtp.includes('gmail') || emailOtp.includes('indiv')) seg = 'INDIVIDUAL';
+
+      switchDemoSegment(seg);
       setMobileTab('profile');
     }, 600);
   };
@@ -174,7 +179,7 @@ export const AuthModal: React.FC = () => {
                   : 'text-[#526357] hover:text-[#112216]'
               }`}
             >
-              Mã OTP Nhanh
+              Mã OTP Email
             </button>
           </div>
 
@@ -256,16 +261,16 @@ export const AuthModal: React.FC = () => {
             <form onSubmit={handleOtpSubmit} className="space-y-3">
               <div>
                 <label className="block text-xs font-semibold text-[#112216] mb-1">
-                  Số điện thoại hoặc Email nhận mã xác thực:
+                  Email nhận mã xác thực OTP:
                 </label>
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <Smartphone className="w-4 h-4 text-[#64748B] absolute left-3 top-2.5" />
+                    <Mail className="w-4 h-4 text-[#64748B] absolute left-3 top-2.5" />
                     <input
-                      type="text"
-                      value={phoneOrEmailOtp}
-                      onChange={(e) => setPhoneOrEmailOtp(e.target.value)}
-                      placeholder="0909 xxx xxx hoặc email..."
+                      type="email"
+                      value={emailOtp}
+                      onChange={(e) => setEmailOtp(e.target.value)}
+                      placeholder="name@company.com hoặc email..."
                       className="w-full pl-9 pr-3 py-2 text-xs border border-[#CBD5E1] rounded focus:ring-2 focus:ring-[#1B5E34] outline-none"
                     />
                   </div>

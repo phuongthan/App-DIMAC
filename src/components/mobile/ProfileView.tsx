@@ -384,56 +384,6 @@ export const ProfileView: React.FC = () => {
           </div>
         </div>
 
-        {/* Security & Role Testing Toolbar */}
-        <div className="p-3 bg-white border border-[#CBD5E1] rounded-lg">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-bold text-[#1B5E34] uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-[#A0322D]" />
-              Thử nghiệm Phân khúc (Role Switcher)
-            </span>
-            <button
-              onClick={logout}
-              className="text-[10px] font-bold text-red-600 hover:underline flex items-center gap-1"
-            >
-              <LogOut className="w-3 h-3" />
-              Đăng xuất
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-1.5">
-            <button
-              onClick={() => switchDemoSegment('ENTERPRISE')}
-              className={`p-1.5 text-[10px] font-bold border rounded text-left transition ${
-                currentUserSegment === 'ENTERPRISE' ? 'bg-[#EAF4ED] border-[#1B5E34] text-[#1B5E34]' : 'bg-slate-50 border-slate-200 text-slate-700'
-              }`}
-            >
-              🏢 ENTERPRISE (M&A)
-            </button>
-            <button
-              onClick={() => switchDemoSegment('SME')}
-              className={`p-1.5 text-[10px] font-bold border rounded text-left transition ${
-                currentUserSegment === 'SME' ? 'bg-[#EBF8FF] border-[#2B6CB0] text-[#2B6CB0]' : 'bg-slate-50 border-slate-200 text-slate-700'
-              }`}
-            >
-              🏭 SME (EcoTrans)
-            </button>
-            <button
-              onClick={() => switchDemoSegment('RETAINER_VIP')}
-              className={`p-1.5 text-[10px] font-bold border rounded text-left transition ${
-                currentUserSegment === 'RETAINER_VIP' ? 'bg-[#FAF5FF] border-[#7E22CE] text-[#7E22CE]' : 'bg-slate-50 border-slate-200 text-slate-700'
-              }`}
-            >
-              💎 VIP (Khang Dien)
-            </button>
-            <button
-              onClick={() => switchDemoSegment('INDIVIDUAL')}
-              className={`p-1.5 text-[10px] font-bold border rounded text-left transition ${
-                currentUserSegment === 'INDIVIDUAL' ? 'bg-[#FFFBEB] border-[#B45309] text-[#B45309]' : 'bg-slate-50 border-slate-200 text-slate-700'
-              }`}
-            >
-              👤 CÁ NHÂN (HNWI)
-            </button>
-          </div>
-        </div>
 
         {/* App Version & Compliance */}
         <div className="text-center py-2 text-[10px] text-[#798C7F] space-y-1 font-mono">

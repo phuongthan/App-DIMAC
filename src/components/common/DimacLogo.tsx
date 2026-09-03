@@ -28,9 +28,9 @@ export const DimacLogo: React.FC<DimacLogoProps> = ({
 }) => {
   // Safe App Context access
   let appLogoConfig = {
-    customImageUrl: null as string | null,
+    customImageUrl: '/assets/dimac-logo-official.svg' as string | null,
     brandName: 'DIMAC',
-    tagline: 'Our Strategic Legal Partnership\nPowers Your Business Vision',
+    tagline: 'ASIA PREMIER LAWYERS',
     showTagline: true,
     colorTheme: 'official' as LogoColorTheme,
   };
@@ -44,10 +44,12 @@ export const DimacLogo: React.FC<DimacLogoProps> = ({
     // Rendered outside AppProvider fallback
   }
 
-  const customImage = customImageUrlOverride !== undefined ? customImageUrlOverride : (!forceVector ? appLogoConfig.customImageUrl : null);
+  const customImage = customImageUrlOverride !== undefined 
+    ? customImageUrlOverride 
+    : (!forceVector ? (appLogoConfig.customImageUrl || '/assets/dimac-logo-official.svg') : null);
   const colorTheme = colorThemeOverride || appLogoConfig.colorTheme || 'official';
   const brandName = brandNameOverride || appLogoConfig.brandName || 'DIMAC';
-  const tagline = taglineOverride || appLogoConfig.tagline || 'Our Strategic Legal Partnership\nPowers Your Business Vision';
+  const tagline = taglineOverride || appLogoConfig.tagline || 'ASIA PREMIER LAWYERS';
   const displayTagline = showTagline !== undefined ? showTagline : appLogoConfig.showTagline;
 
   // Theme color maps for Official DIMAC Vector Identity
@@ -173,10 +175,13 @@ export const DimacLogo: React.FC<DimacLogoProps> = ({
       src={customImage} 
       alt={brandName} 
       className="object-contain shrink-0" 
+      referrerPolicy="no-referrer"
       style={{ height: `${currentScale.h}px`, maxHeight: `${currentScale.h}px`, maxWidth: `${Math.round(currentScale.h * 2.8)}px` }}
       onError={(e) => {
-        // Fallback to SVG if image fails to load
-        e.currentTarget.style.display = 'none';
+        // Fallback to local official SVG if external fails
+        if (e.currentTarget.src !== '/assets/dimac-logo-official.svg') {
+          e.currentTarget.src = '/assets/dimac-logo-official.svg';
+        }
       }}
     />
   ) : (

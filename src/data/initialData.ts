@@ -728,6 +728,38 @@ export const DEMO_ACCOUNTS: Record<CustomerSegment, UserProfile> = {
       }
     }
   },
+  RETAILER: {
+    id: 'usr-retail-05',
+    fullName: 'Rachel Schneider',
+    email: 'rachel@schneider-retail.vn',
+    phone: '0988 554 321',
+    enterpriseName: 'Schneider Retail & Convenience Chain Vietnam',
+    position: 'Giám đốc Chuỗi Bán lẻ (Retail Director)',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    customerTier: 'ENTERPRISE',
+    segment: 'RETAILER',
+    language: 'vi',
+    contractCode: 'DIMAC-RETAIL-2025-089',
+    taxCode: '0318992211',
+    retainerPackage: 'Gói Pháp lý Chuỗi Bán lẻ & Nhượng quyền Thương mại',
+    savedArticleIds: ['art-1', 'art-2'],
+    notificationPrefs: {
+      breakingAlerts: true,
+      weeklyDigest: true,
+      promotions: true,
+      consultationUpdates: true,
+      subscribedCategories: {
+        'M&A': true,
+        'Đầu tư': true,
+        'Bất động sản': true,
+        'Năng lượng': false,
+        'Tranh chấp & Tố tụng': true,
+        'Lao động': true,
+        'Thuế & Tài chính': true,
+        'Doanh nghiệp': true
+      }
+    }
+  },
   RETAINER_VIP: {
     id: 'usr-vip-03',
     fullName: 'Nguyễn Hoàng Khang',
@@ -812,41 +844,80 @@ export const INITIAL_LEADS: ConsultationLead[] = [
     createdAt: '2024-08-28T15:20:00Z',
     assignedLawyerName: 'LS. Lê Thanh Hòa',
     assignedLawyerId: 'lawyer-1',
-    priority: 'URGENT'
+    priority: 'URGENT',
+    customerSegment: 'ENTERPRISE'
   },
   {
     id: 'lead-2',
     customerName: 'Ms. Rachel Schneider',
     phone: '0988 554 321',
     email: 'rachel@schneider-energy.de',
-    enterpriseName: 'Schneider Clean Energy Ltd (FDI Germany)',
-    position: 'Managing Director Vietnam',
-    practiceArea: 'Đầu tư',
-    serviceDetail: 'Tư vấn xin cấp Giấy phép đầu tư và phê duyệt đánh giá tác động môi trường nhà máy năng lượng tái tạo.',
-    notes: 'Yêu cầu tư vấn song ngữ Anh - Việt. Quan tâm Nghị định 10/2024/NĐ-CP.',
+    enterpriseName: 'Schneider Retail & Convenience Chain Vietnam',
+    position: 'Giám đốc Chuỗi Bán Lẻ (Retail Director)',
+    practiceArea: 'Doanh nghiệp',
+    serviceDetail: 'Tư vấn mở rộng hệ thống 50 chuỗi cửa hàng bán lẻ tiện lợi, xin Giấy phép cơ sở bán lẻ (ENT) và hợp đồng nhượng quyền.',
+    notes: 'Yêu cầu tư vấn song ngữ Anh - Việt. Cần hoàn tất thẩm định mặt bằng bán lẻ trong tháng này.',
     appliedVoucherCode: 'DIMAC-MA20',
     status: 'NEW',
     createdAt: '2024-08-30T10:15:00Z',
     assignedLawyerName: 'LS. Lê Thanh Hòa',
     assignedLawyerId: 'lawyer-1',
-    priority: 'HIGH'
+    priority: 'HIGH',
+    customerSegment: 'RETAILER'
   },
   {
     id: 'lead-3',
     customerName: 'Hoàng Kim Long',
     phone: '0912 333 789',
     email: 'long.hk@vietphat-realty.vn',
-    enterpriseName: 'Công ty Cổ phần Địa ốc Việt Phát',
-    position: 'Tổng Giám Đốc',
+    enterpriseName: 'Công ty Cổ phần Địa ốc & Năng lượng Việt Phát',
+    position: 'Chủ tịch HĐQT',
     practiceArea: 'Bất động sản',
-    serviceDetail: 'Rà soát pháp lý chuyển nhượng dự án khu đô thị 12ha theo Luật Đất đai 2024.',
-    notes: 'Đã hoàn tất tư vấn sơ bộ, đang chuẩn bị Hợp đồng dịch vụ pháp lý chính thức.',
-    appliedVoucherCode: 'DIMAC-FDI2M',
+    serviceDetail: 'Rà soát pháp lý chuyển nhượng dự án khu đô thị 12ha theo Luật Đất đai 2024. Đang duy trì gói Cố vấn thường xuyên Diamond.',
+    notes: 'Đã hoàn tất tư vấn sơ bộ, đang chuẩn bị Phụ lục Hợp đồng dịch vụ pháp lý chính thức.',
+    appliedVoucherCode: 'DIMAC-VIP-RETAINER30',
     status: 'SIGNED',
     createdAt: '2024-08-18T09:00:00Z',
     assignedLawyerName: 'LS. Trần Quỳnh Mai',
     assignedLawyerId: 'lawyer-2',
-    priority: 'NORMAL'
+    priority: 'NORMAL',
+    customerSegment: 'RETAINER_VIP'
+  },
+  {
+    id: 'lead-4',
+    customerName: 'Vũ Hải Yến',
+    phone: '0918 333 789',
+    email: 'yen.vu@ecotrans-logistics.vn',
+    enterpriseName: 'Công ty Cổ phần Logistics Thông minh EcoTrans',
+    position: 'Tổng Giám đốc (CEO)',
+    practiceArea: 'Lao động',
+    serviceDetail: 'Chuẩn hóa thỏa ước lao động tập thể, nội quy công ty và thang bảng lương cho 180 nhân sự.',
+    notes: 'Khách hàng phân khúc SME đã kích hoạt voucher giảm 20% gói lao động.',
+    appliedVoucherCode: 'DIMAC-SME-LABOR20',
+    status: 'NEW',
+    createdAt: '2024-08-31T08:45:00Z',
+    assignedLawyerName: 'LS. Nguyễn Đình Trung',
+    assignedLawyerId: 'lawyer-4',
+    priority: 'NORMAL',
+    customerSegment: 'SME'
+  },
+  {
+    id: 'lead-5',
+    customerName: 'Lê Bảo Quốc',
+    phone: '0977 555 123',
+    email: 'quoc.le.investor@gmail.com',
+    enterpriseName: 'Nhà đầu tư Cá nhân (HNWI)',
+    position: 'Nhà đầu tư Bất động sản / Cổ đông sáng lập',
+    practiceArea: 'Tranh chấp & Tố tụng',
+    serviceDetail: 'Tư vấn giải quyết tranh chấp hợp đồng đặt cọc mua bán bất động sản triệu đô và cơ cấu tài sản gia đình.',
+    notes: 'Khách hàng cá nhân cần bảo mật cao. Hẹn gặp trực tiếp tại văn phòng DIMAC.',
+    appliedVoucherCode: 'DIMAC-DISPUTE10',
+    status: 'IN_PROGRESS',
+    createdAt: '2024-08-29T14:10:00Z',
+    assignedLawyerName: 'LS. Phạm Quốc Tuấn',
+    assignedLawyerId: 'lawyer-3',
+    priority: 'HIGH',
+    customerSegment: 'INDIVIDUAL'
   }
 ];
 

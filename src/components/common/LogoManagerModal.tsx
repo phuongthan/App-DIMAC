@@ -147,9 +147,9 @@ export const LogoManagerModal: React.FC = () => {
   // Save changes to Global Context & LocalStorage
   const handleSave = () => {
     updateLogoConfig({
-      customImageUrl: tempCustomImageUrl,
+      customImageUrl: tempCustomImageUrl || '/assets/dimac-logo-official.svg',
       brandName: tempBrandName.trim() || 'DIMAC',
-      tagline: tempTagline.trim() || 'Our Strategic Legal Partnership\nPowers Your Business Vision',
+      tagline: tempTagline.trim() || 'ASIA PREMIER LAWYERS',
       showTagline: tempShowTagline,
       colorTheme: tempColorTheme,
     });
@@ -164,14 +164,14 @@ export const LogoManagerModal: React.FC = () => {
   // Reset to default official
   const handleReset = () => {
     resetLogoToDefault();
-    setTempCustomImageUrl(null);
+    setTempCustomImageUrl('/assets/dimac-logo-official.svg');
     setTempBrandName('DIMAC');
-    setTempTagline('Our Strategic Legal Partnership\nPowers Your Business Vision');
+    setTempTagline('ASIA PREMIER LAWYERS');
     setTempShowTagline(true);
     setTempColorTheme('official');
     setUrlInput('');
     setUploadedFileName('');
-    setToastSuccess('Đã khôi phục logo DIMAC về bản chuẩn thương hiệu ban đầu!');
+    setToastSuccess('Đã khôi phục logo DIMAC về bản chuẩn thương hiệu ban đầu (DIMAC.FINAL.11.3)!');
     setTimeout(() => setToastSuccess(null), 1500);
   };
 
@@ -333,49 +333,113 @@ export const LogoManagerModal: React.FC = () => {
               </div>
             )}
 
-            {/* Tab 2: Vector Presets */}
+            {/* Tab 2: Vector Presets & Official Assets */}
             {activeTab === 'theme' && (
-              <div className="space-y-3 bg-[#F8FAF9] p-4 border border-[#DCE5DF]">
-                <p className="text-xs text-[#526357]">
-                  Chọn phong cách màu sắc chuẩn cho biểu tượng Đại bàng & Ngôi sao vector:
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {PRESET_LOGOS.map(preset => {
-                    const isSelected = !tempCustomImageUrl && tempColorTheme === preset.theme;
-                    return (
-                      <div
-                        key={preset.id}
-                        onClick={() => {
-                          setTempCustomImageUrl(null);
-                          setTempColorTheme(preset.theme);
-                        }}
-                        className={`p-3.5 border bg-white cursor-pointer transition flex flex-col justify-between gap-2.5 ${
-                          isSelected 
-                            ? 'border-[#165A31] ring-2 ring-[#165A31]/20 bg-[#F4F9F5]' 
-                            : 'border-[#DCE5DF] hover:border-[#165A31]'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-[#112216]">{preset.name}</span>
-                          {isSelected && (
-                            <span className="p-0.5 bg-[#165A31] text-white rounded-full">
-                              <Check className="w-3 h-3" />
-                            </span>
-                          )}
-                        </div>
-                        <div className="py-2 px-3 bg-[#FAFCFA] border border-[#E5ECE7] flex items-center justify-center">
-                          <DimacLogo 
-                            variant="horizontal" 
-                            size="xs" 
-                            colorThemeOverride={preset.theme} 
-                            forceVector={true}
-                            showTagline={true} 
-                          />
-                        </div>
-                        <p className="text-[10px] text-[#526357]">{preset.desc}</p>
+              <div className="space-y-4 bg-[#F8FAF9] p-4 border border-[#DCE5DF]">
+                {/* Official Logo Assets */}
+                <div className="space-y-2">
+                  <span className="text-[11px] font-bold text-[#165A31] uppercase tracking-wider block">
+                    ★ Bộ nhận diện thương hiệu DIMAC Chuẩn (Không nền)
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div
+                      onClick={() => {
+                        setTempCustomImageUrl('/assets/dimac-logo-official.svg');
+                        setTempBrandName('DIMAC');
+                        setTempTagline('ASIA PREMIER LAWYERS');
+                        setUploadedFileName('DIMAC.FINAL.11.3-03_Không nền.svg');
+                      }}
+                      className={`p-3 border bg-white cursor-pointer transition flex flex-col gap-2 ${
+                        tempCustomImageUrl === '/assets/dimac-logo-official.svg'
+                          ? 'border-[#165A31] ring-2 ring-[#165A31]/20 bg-[#F4F9F5]'
+                          : 'border-[#DCE5DF] hover:border-[#165A31]'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#112216]">Logo Chính thức (Đầy đủ)</span>
+                        {tempCustomImageUrl === '/assets/dimac-logo-official.svg' && (
+                          <span className="p-0.5 bg-[#165A31] text-white rounded-full">
+                            <Check className="w-3 h-3" />
+                          </span>
+                        )}
                       </div>
-                    );
-                  })}
+                      <div className="py-2 px-3 bg-white border border-[#E5ECE7] flex items-center justify-center h-14">
+                        <img src="/assets/dimac-logo-official.svg" alt="DIMAC Official" className="h-10 object-contain" />
+                      </div>
+                      <p className="text-[10px] text-[#526357]">Đại bàng, Ngôi sao, DIMAC & ASIA PREMIER LAWYERS</p>
+                    </div>
+
+                    <div
+                      onClick={() => {
+                        setTempCustomImageUrl('/assets/dimac-logo-horizontal.svg');
+                        setTempBrandName('DIMAC');
+                        setTempTagline('ASIA PREMIER LAWYERS');
+                        setUploadedFileName('DIMAC.Horizontal_Không nền.svg');
+                      }}
+                      className={`p-3 border bg-white cursor-pointer transition flex flex-col gap-2 ${
+                        tempCustomImageUrl === '/assets/dimac-logo-horizontal.svg'
+                          ? 'border-[#165A31] ring-2 ring-[#165A31]/20 bg-[#F4F9F5]'
+                          : 'border-[#DCE5DF] hover:border-[#165A31]'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#112216]">Logo Dạng Ngang (Header)</span>
+                        {tempCustomImageUrl === '/assets/dimac-logo-horizontal.svg' && (
+                          <span className="p-0.5 bg-[#165A31] text-white rounded-full">
+                            <Check className="w-3 h-3" />
+                          </span>
+                        )}
+                      </div>
+                      <div className="py-2 px-3 bg-white border border-[#E5ECE7] flex items-center justify-center h-14">
+                        <img src="/assets/dimac-logo-horizontal.svg" alt="DIMAC Horizontal" className="h-8 object-contain" />
+                      </div>
+                      <p className="text-[10px] text-[#526357]">Bản dàn ngang tối ưu cho thanh tiêu đề</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-[#DCE5DF]">
+                  <p className="text-xs text-[#526357] mb-2.5">
+                    Hoặc chọn phong cách màu sắc cho biểu tượng thuần vector:
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {PRESET_LOGOS.map(preset => {
+                      const isSelected = !tempCustomImageUrl && tempColorTheme === preset.theme;
+                      return (
+                        <div
+                          key={preset.id}
+                          onClick={() => {
+                            setTempCustomImageUrl(null);
+                            setTempColorTheme(preset.theme);
+                          }}
+                          className={`p-3.5 border bg-white cursor-pointer transition flex flex-col justify-between gap-2.5 ${
+                            isSelected 
+                              ? 'border-[#165A31] ring-2 ring-[#165A31]/20 bg-[#F4F9F5]' 
+                              : 'border-[#DCE5DF] hover:border-[#165A31]'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold text-[#112216]">{preset.name}</span>
+                            {isSelected && (
+                              <span className="p-0.5 bg-[#165A31] text-white rounded-full">
+                                <Check className="w-3 h-3" />
+                              </span>
+                            )}
+                          </div>
+                          <div className="py-2 px-3 bg-[#FAFCFA] border border-[#E5ECE7] flex items-center justify-center">
+                            <DimacLogo 
+                              variant="horizontal" 
+                              size="xs" 
+                              colorThemeOverride={preset.theme} 
+                              forceVector={true}
+                              showTagline={true} 
+                            />
+                          </div>
+                          <p className="text-[10px] text-[#526357]">{preset.desc}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             )}

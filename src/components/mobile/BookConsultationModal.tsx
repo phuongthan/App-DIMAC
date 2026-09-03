@@ -69,7 +69,8 @@ export const BookConsultationModal: React.FC = () => {
       appliedVoucherCode: voucherCode || undefined,
       assignedLawyerName: assignedLawyer,
       assignedLawyerId: selectedLawyerId,
-      priority: 'HIGH'
+      priority: 'HIGH',
+      customerSegment: userProfile.segment || 'ENTERPRISE'
     });
 
     setSubmitted(true);

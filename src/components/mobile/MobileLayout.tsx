@@ -86,8 +86,11 @@ export const MobileLayout: React.FC<{ isEmbedded?: boolean }> = ({ isEmbedded = 
           >
             <DimacLogo variant="symbol" size="xs" />
             <div className="flex flex-col justify-center">
-              <span className="text-[7.5px] font-bold text-[#A02B2D] uppercase leading-tight tracking-[0.03em] whitespace-pre-line font-sans">
-                {logoConfig.tagline || "Our Strategic Legal Partnership\nPowers Your Business Vision"}
+              <span className="text-[11px] font-black text-[#145E35] uppercase tracking-wide leading-none font-sans">
+                {logoConfig.brandName || "DIMAC"}
+              </span>
+              <span className="text-[7.5px] font-extrabold text-[#A02B2D] uppercase leading-tight tracking-[0.06em] mt-0.5 whitespace-pre-line font-sans">
+                {logoConfig.tagline || "ASIA PREMIER LAWYERS"}
               </span>
             </div>
           </div>
