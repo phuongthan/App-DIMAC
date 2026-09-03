@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* DIMAC Brand Guideline Official Palette (Page 7) */
+    --dimac-green: #1B5E34;       /* Primary Green */
+    --dimac-green-dark: #144928;  /* Deep Forest */
+    --dimac-green-light: #237A44; /* Leaf Green */
+    --dimac-green-tint: #EAF4ED;  /* Soft Green Tint */
+    --dimac-green-border: #C8DECFC;
+
+    --dimac-red: #A0322D;         /* Accent Crimson */
+    --dimac-red-dark: #7A2622;    /* Deep Crimson */
+    --dimac-red-light: #C43F39;   /* Bright Crimson */
+    --dimac-red-tint: #FDF0EF;    /* Soft Red Tint */
+
+    --dimac-bg-light: #F6F8F6;    /* Light Neutral Background */
+    --dimac-surface: #FFFFFF;     /* Pure White Card */
+    --dimac-surface-subtle: #F1F4F2;
+    --dimac-border: #DCE5DF;      /* Clean Crisp Border */
+    --dimac-border-subtle: #E8EFEA;
+    --dimac-text-main: #112216;   /* Authoritative Deep Charcoal */
+    --dimac-text-muted: #526357;  /* Secondary Text */
+    --dimac-text-subtle: #798C7F; /* Captions & Timestamps */
+  }
+
+  body {
+    /* Brand Guideline Page 8: Helvetica Neue as primary font for Digital & Media */
+    font-family: 'Helvetica Neue', Helvetica, Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #F4F6F5;
+    color: #112216;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Formal documents & declarations font - Brand Guideline Page 8: Times New Roman */
+  .font-legal-doc {
+    font-family: 'Times New Roman', Times, Georgia, serif;
+  }
+
+  /* Brand Heading Styles */
+  .font-brand-sans {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* DIMAC Utilities */
+.bg-dimac-green {
+  background-color: #1B5E34;
+}
+
+.text-dimac-green {
+  color: #1B5E34;
+}
+
+.border-dimac-green {
+  border-color: #1B5E34;
+}
+
+.bg-dimac-red {
+  background-color: #A0322D;
+}
+
+.text-dimac-red {
+  color: #A0322D;
+}
+
+.border-dimac-red {
+  border-color: #A0322D;
+}
+
+/* Custom scrollbar for light theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F4F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C2D5C8;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1B5E34;
+}
+
+/* Barcode simulation pattern */
+.barcode-stripes {
+  background: repeating-linear-gradient(
+    90deg,
+    #1B5E34 0px,
+    #1B5E34 3px,
+    transparent 3px,
+    transparent 5px,
+    #1B5E34 5px,
+    #1B5E34 9px,
+    transparent 9px,
+    transparent 11px,
+    #1B5E34 11px,
+    #1B5E34 13px,
+    transparent 13px,
+    transparent 17px
+  );
+}

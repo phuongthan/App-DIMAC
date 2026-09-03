@@ -1,0 +1,6 @@
+{
+  "name": "DIMAC Law Firm - Asia Premier Lawyers",
+  "description": "DIMAC Law Firm là công ty luật hàng đầu hướng đến thị trường Châu Á, chuyên về Tư vấn Doanh nghiệp, M&A, Bất động sản và Giải quyết Tranh chấp. Ứng dụng di động & Cổng CMS quản trị thông tin pháp lý.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
